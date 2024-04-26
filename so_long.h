@@ -6,7 +6,7 @@
 /*   By: fbiberog <fbiberog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:47:09 by fbiberog          #+#    #+#             */
-/*   Updated: 2024/04/23 21:49:16 by fbiberog         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:55:48 by fbiberog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct t_data
 {
 	void		*mlx;
 	char		**map;
+	int			fd;
 	int			width;
 	int			height;
 	int			y;

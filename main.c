@@ -6,7 +6,7 @@
 /*   By: fbiberog <fbiberog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:06:07 by fbiberog          #+#    #+#             */
-/*   Updated: 2024/04/23 21:46:57 by fbiberog         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:04:00 by fbiberog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,19 @@ int	measurements(char *map, struct t_data *game)
 	return (1);
 }
 
-char	*file_to_array(char *file)
+char	*file_to_array(char *file, struct t_data *game)
 {
 	char	*map;
 	char	*temp;
-	int		fd;
 	int		len;
 	int		lenold;
 
-	fd = open(file, O_RDONLY);
+	game->fd = open(file, O_RDONLY);
+	if (game->fd == -1)
+		return (NULL);
 	while (1)
 	{
-		temp = get_next_line(fd);
+		temp = get_next_line(game->fd);
 		if (!temp)
 			return (NULL);
 		len = ft_strlen(temp);
@@ -55,12 +56,12 @@ char	*file_to_array(char *file)
 			lenold = len;
 		map = ft_strjoin2(map, temp, 0);
 		if (len != lenold && ft_strchr2(temp, '\n') >= 0)
-			return (free(temp), free(map), NULL);
+			return (get_next_line(game->fd), free(temp), free(map), NULL);
 		if ((len + 1 == lenold && ft_strchr2(temp, '\n') == -1))
 			break ;
 		free(temp);
 	}
-	close(fd);
+	get_next_line(game->fd);
 	return (free(temp), map);
 }
 
@@ -81,7 +82,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_printf("Invalid number of arguments.\n"), 0);
 	game = (struct t_data){0};
-	temp = file_to_array(argv[1]);
+	close(game.fd);
+	temp = file_to_array(argv[1], &game);
 	if (!temp)
 		return (ft_printf("The stadium is under construction.\n"), 0);
 	if (character_check(temp, &game) == (0))
@@ -89,13 +91,12 @@ int	main(int argc, char **argv)
 	game.map = ft_split(temp, '\n');
 	free(temp);
 	if (!floodfill(&game))
-		return (free(game.map), 0);
+		return (ft_free2(game.map, game.height), 0);
 	display_map(&game);
 	mlx_key_hook(game.mlx, (void *)&pressed_key, &game);
 	mlx_loop(game.mlx);
 	if (game.map[game.y][game.x] == 'E' && game.collectibles == 0)
 		ft_printf("The GOAT with yet another Ballon d'Or!\n");
 	mlx_terminate(game.mlx);
-	free_images(&game);
-	return (free(game.map), 0);
+	return (ft_free2(game.map, game.height), 0);
 }

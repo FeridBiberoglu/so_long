@@ -6,7 +6,7 @@
 /*   By: fbiberog <fbiberog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:19:03 by fbiberog          #+#    #+#             */
-/*   Updated: 2024/04/23 21:42:52 by fbiberog         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:14:34 by fbiberog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ static void	make_img(struct t_data *game)
 	game->imgc = mlx_texture_to_image(game->mlx, texture_c);
 	game->imge = mlx_texture_to_image(game->mlx, texture_e);
 	game->imgp = mlx_texture_to_image(game->mlx, texture_p);
-	free(texture0);
-	free(texture1);
-	free(texture_c);
-	free(texture_e);
-	free(texture_p);
+	mlx_delete_texture(texture0);
+	mlx_delete_texture(texture1);
+	mlx_delete_texture(texture_c);
+	mlx_delete_texture(texture_e);
+	mlx_delete_texture(texture_p);
 }
 
 int	display_map(struct t_data *game)
