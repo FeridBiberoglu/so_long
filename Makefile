@@ -6,7 +6,7 @@ LIBFT := ./libft
 HEADERS	:= -I ./include -I $(LIBMLX)/include -I$(LIBFT)
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm  $(LIBFT)/libft.a
 SRCS	:= main.c map.c make_2d_array.c playermovement.c \
-			mapchecker.c
+			mapchecker.c hooks.c
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx libft $(NAME)

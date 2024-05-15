@@ -6,7 +6,7 @@
 /*   By: fbiberog <fbiberog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:19:03 by fbiberog          #+#    #+#             */
-/*   Updated: 2024/04/26 16:14:34 by fbiberog         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:52:27 by fbiberog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	display_map(struct t_data *game)
 	j = 0;
 	game->mlx = mlx_init((game->width * 64), (game->height * 64), "GTAVI", 1);
 	make_img(game);
+	norminette_function(game);
 	while (j <= (game->height * 64) && i <= (game->width * 64))
 	{
 		while (i <= (game->width * 64))

@@ -6,7 +6,7 @@
 /*   By: fbiberog <fbiberog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:47:09 by fbiberog          #+#    #+#             */
-/*   Updated: 2024/04/26 16:55:48 by fbiberog         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:53:29 by fbiberog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct t_data
 	mlx_image_t	*imgc;
 	mlx_image_t	*imge;
 	mlx_image_t	*imgp;
+	mlx_image_t	*imgx;
 }				t_data;
 
 void			pressed_key(mlx_key_data_t keydata, struct t_data *game);
@@ -55,6 +56,9 @@ int				display_map(struct t_data *game);
 void			move_player(struct t_data *game, int direction, char dimension);
 int				floodfill(struct t_data *game);
 int				ft_printf(const char *string, ...);
-void			player_position(struct t_data *game);
+// void			player_position(struct t_data *game);
+void			move_player_y(struct t_data *game, int dir);
+void			move_player_x(struct t_data *game, int dir);
+void			norminette_function(struct t_data *game);
 
 #endif
