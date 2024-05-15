@@ -6,11 +6,21 @@
 /*   By: fbiberog <fbiberog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:06:07 by fbiberog          #+#    #+#             */
-/*   Updated: 2024/04/26 17:04:00 by fbiberog         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:55:38 by fbiberog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	valid_mapname(char *argv)
+{
+	int	i;
+
+	i = ft_strlen(argv);
+	if (i <= 4 || !ft_strnstr(argv + (i - 4), ".ber", i))
+		return (0);
+	return (1);
+}
 
 int	measurements(char *map, struct t_data *game)
 {
@@ -43,6 +53,7 @@ char	*file_to_array(char *file, struct t_data *game)
 	int		len;
 	int		lenold;
 
+	map = NULL;
 	game->fd = open(file, O_RDONLY);
 	if (game->fd == -1)
 		return (NULL);
@@ -61,17 +72,16 @@ char	*file_to_array(char *file, struct t_data *game)
 			break ;
 		free(temp);
 	}
-	get_next_line(game->fd);
-	return (free(temp), map);
+	return (get_next_line(game->fd), free(temp), map);
 }
 
 void	free_images(struct t_data *game)
 {
-	free(game->img0);
-	free(game->img1);
-	free(game->imgc);
-	free(game->imge);
-	free(game->imgp);
+	mlx_delete_image(game->mlx, game->img0);
+	mlx_delete_image(game->mlx, game->img1);
+	mlx_delete_image(game->mlx, game->imgc);
+	mlx_delete_image(game->mlx, game->imge);
+	mlx_delete_image(game->mlx, game->imgp);
 }
 
 int	main(int argc, char **argv)
@@ -79,8 +89,8 @@ int	main(int argc, char **argv)
 	struct t_data	game;
 	char			*temp;
 
-	if (argc != 2)
-		return (ft_printf("Invalid number of arguments.\n"), 0);
+	if (argc != 2 || !valid_mapname(argv[1]))
+		return (ft_printf("Error\n"), 0);
 	game = (struct t_data){0};
 	close(game.fd);
 	temp = file_to_array(argv[1], &game);
