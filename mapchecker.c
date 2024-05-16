@@ -6,7 +6,7 @@
 /*   By: fbiberog <fbiberog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:49:17 by fbiberog          #+#    #+#             */
-/*   Updated: 2024/05/15 18:28:28 by fbiberog         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:19:03 by fbiberog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	border_check(struct t_data *game)
 	{
 		if (game->map[0][i] != '1' || game->map[game->height - 1][i] != '1')
 		{
-			ft_printf("No visible sidelines.\n");
+			ft_printf("Error\nNo visible sidelines.\n");
 			return (0);
 		}
 		i++;
@@ -32,7 +32,7 @@ int	border_check(struct t_data *game)
 	{
 		if (game->map[j][0] != '1' || game->map[j][game->width - 1] != '1')
 		{
-			ft_printf("No visible sidelines.\n");
+			ft_printf("Error\nNo visible sidelines.\n");
 			return (0);
 		}
 		j++;
@@ -77,8 +77,7 @@ void	fill_map(struct t_data *game, char **temp_map, int j, int i)
 	he = game->height;
 	wi = game->width;
 	if (j <= 0 || j >= he || i <= 0 || i >= wi || temp_map[j][i] == 'X'
-		|| temp_map[j][i] == '1' || (temp_map[j][i] == 'E'
-			&& game->collectibles > 0))
+		|| temp_map[j][i] == '1')
 		return ;
 	if (temp_map[j][i] == 'C')
 		game->collectibles--;
@@ -124,7 +123,7 @@ int	floodfill(struct t_data *game)
 	ft_free_array(temp_map, game->height);
 	if (game->collectibles != 0 || game->exit_check != 1)
 	{
-		ft_printf("The game has been cancelled.\n");
+		ft_printf("Error\nThe game has been cancelled.\n");
 		return (0);
 	}
 	game->collectibles = temp;

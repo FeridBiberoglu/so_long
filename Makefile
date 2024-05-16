@@ -12,10 +12,10 @@ OBJS	:= ${SRCS:.c=.o}
 all: libmlx libft $(NAME)
 
 libft:
-	@make -C $(LIBFT)
+	make -C $(LIBFT)
 
 libmlx:
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+	cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
@@ -25,14 +25,14 @@ $(NAME): $(OBJS)
 	$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 
 clean:
-	@rm -rf $(OBJS)
-	@rm -rf $(LIBMLX)/build
-	@make clean -C $(LIBFT)
-	@rm -rf $(LIBMLX)/build
+	rm -rf $(OBJS)
+	rm -rf $(LIBMLX)/build
+	make clean -C $(LIBFT)
+	rm -rf $(LIBMLX)/build
 
 fclean: clean
-	@rm -rf $(NAME)
-	@make fclean -C $(LIBFT)
+	rm -rf $(NAME)
+	make fclean -C $(LIBFT)
 
 re: clean all
 

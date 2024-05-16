@@ -6,7 +6,7 @@
 /*   By: fbiberog <fbiberog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:47:09 by fbiberog          #+#    #+#             */
-/*   Updated: 2024/05/15 19:53:29 by fbiberog         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:26:01 by fbiberog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int				display_map(struct t_data *game);
 void			move_player(struct t_data *game, int direction, char dimension);
 int				floodfill(struct t_data *game);
 int				ft_printf(const char *string, ...);
-// void			player_position(struct t_data *game);
+void			player_position(struct t_data *game);
 void			move_player_y(struct t_data *game, int dir);
 void			move_player_x(struct t_data *game, int dir);
 void			norminette_function(struct t_data *game);

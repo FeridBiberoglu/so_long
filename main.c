@@ -6,17 +6,20 @@
 /*   By: fbiberog <fbiberog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:06:07 by fbiberog          #+#    #+#             */
-/*   Updated: 2024/05/02 14:55:38 by fbiberog         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:14:54 by fbiberog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	valid_mapname(char *argv)
+int	valid_mapname(char *argv, struct t_data *game)
 {
 	int	i;
 
 	i = ft_strlen(argv);
+	game->fd = open(argv, O_RDONLY);
+	if (game->fd == -1)
+		return (0);
 	if (i <= 4 || !ft_strnstr(argv + (i - 4), ".ber", i))
 		return (0);
 	return (1);
@@ -34,7 +37,7 @@ int	measurements(char *map, struct t_data *game)
 		if (map[i] != 'C' && map[i] != 'E' && map[i] != 'P' && map[i] != '1'
 			&& map[i] != '0' && map[i] != '\n')
 		{
-			ft_printf("This field is unplayable.\n");
+			ft_printf("Error\nThis field is unplayable.\n");
 			return (0);
 		}
 		if (map[i] == '\n')
@@ -46,7 +49,7 @@ int	measurements(char *map, struct t_data *game)
 	return (1);
 }
 
-char	*file_to_array(char *file, struct t_data *game)
+char	*file_to_array(struct t_data *game)
 {
 	char	*map;
 	char	*temp;
@@ -54,9 +57,6 @@ char	*file_to_array(char *file, struct t_data *game)
 	int		lenold;
 
 	map = NULL;
-	game->fd = open(file, O_RDONLY);
-	if (game->fd == -1)
-		return (NULL);
 	while (1)
 	{
 		temp = get_next_line(game->fd);
@@ -67,12 +67,12 @@ char	*file_to_array(char *file, struct t_data *game)
 			lenold = len;
 		map = ft_strjoin2(map, temp, 0);
 		if (len != lenold && ft_strchr2(temp, '\n') >= 0)
-			return (get_next_line(game->fd), free(temp), free(map), NULL);
+			return (free(temp), free(map), NULL);
 		if ((len + 1 == lenold && ft_strchr2(temp, '\n') == -1))
 			break ;
 		free(temp);
 	}
-	return (get_next_line(game->fd), free(temp), map);
+	return (free(temp), map);
 }
 
 void	free_images(struct t_data *game)
@@ -89,13 +89,13 @@ int	main(int argc, char **argv)
 	struct t_data	game;
 	char			*temp;
 
-	if (argc != 2 || !valid_mapname(argv[1]))
-		return (ft_printf("Error\n"), 0);
 	game = (struct t_data){0};
+	if (argc != 2 || !valid_mapname(argv[1], &game))
+		return (ft_printf("Error\nInvalid mapname.\n"), 0);
+	temp = file_to_array(&game);
 	close(game.fd);
-	temp = file_to_array(argv[1], &game);
 	if (!temp)
-		return (ft_printf("The stadium is under construction.\n"), 0);
+		return (ft_printf("Error\nThe stadium is under construction.\n"), 0);
 	if (character_check(temp, &game) == (0))
 		return (free(temp), 0);
 	game.map = ft_split(temp, '\n');

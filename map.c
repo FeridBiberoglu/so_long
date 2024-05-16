@@ -6,7 +6,7 @@
 /*   By: fbiberog <fbiberog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:19:03 by fbiberog          #+#    #+#             */
-/*   Updated: 2024/05/15 19:52:27 by fbiberog         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:20:09 by fbiberog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,22 @@ char	*character_check(char *map, struct t_data *game)
 	game->collectibles = occurence_amount(map, 'C');
 	if (occurence_amount(map, 'P') > 1)
 	{
-		ft_printf("A streaker entered the field.\n");
+		ft_printf("Error\nA streaker entered the field.\n");
 		return (NULL);
 	}
 	if (occurence_amount(map, 'P') == 0)
 	{
-		ft_printf("Messi has been injured.\n");
+		ft_printf("Error\nMessi has been injured.\n");
 		return (NULL);
 	}
-	if (occurence_amount(map, 'E') == 0)
+	if (occurence_amount(map, 'E') != 1)
 	{
-		ft_printf("¿Por qué jugaría si no hay premios para ganar?\n");
+		ft_printf("Error\n¿Por qué jugaría si no hay premios para ganar?\n");
 		return (NULL);
 	}
 	if (game->collectibles < 1)
 	{
+		ft_printf("Error\n");
 		ft_printf("Match has been cancelled due to a shortage of players.\n");
 		return (NULL);
 	}

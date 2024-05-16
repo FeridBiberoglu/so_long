@@ -6,7 +6,7 @@
 /*   By: fbiberog <fbiberog@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:40:44 by fbiberog          #+#    #+#             */
-/*   Updated: 2024/05/15 19:54:56 by fbiberog         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:18:39 by fbiberog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,16 @@ void	collected(struct t_data *game)
 	game->collectibles = game->collectibles - 1;
 	game->map[game->y][game->x] = '0';
 	if (i % 4 == 0)
-		ft_printf("Messi leaving Sergio Ramos in the dust.\n");
+		ft_printf("Error\nMessi leaving Sergio Ramos in the dust.\n");
 	if (i % 4 == 1)
-		ft_printf("Messi Messi Messi\n");
+		ft_printf("Error\nMessi Messi Messi\n");
 	if (i % 4 == 2)
+	{
+		ft_printf("Error\n");
 		ft_printf("Encara Messi Encara Messi Encara Messi Encara Messi.\n");
+	}
 	if (i % 4 == 3)
-		ft_printf("Messi showing us why he is the best.\n");
+		ft_printf("Error\nMessi showing us why he is the best.\n");
 	i++;
 	return ;
 }
